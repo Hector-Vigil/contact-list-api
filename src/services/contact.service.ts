@@ -8,7 +8,7 @@ export function createContact(contact: ICreateContact){
     })
 }
 
-export function updateContact(id:number, contact: IContact){
+export function updateContact(id:string, contact: IContact){
     return prisma.contact.update({
         where: {
             id
@@ -17,7 +17,7 @@ export function updateContact(id:number, contact: IContact){
     })
 }
 
-export function getContact(id:number){
+export function getContact(id:string){
     return prisma.contact.findUnique({
         where: {
             id
@@ -29,7 +29,7 @@ export function getAllContacts(){
     return prisma.contact.findMany();
 }
 
-export function deleteContact(id:number){
+export function deleteContact(id:string){
     return prisma.contact.delete({
         where: {
             id

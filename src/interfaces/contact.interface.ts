@@ -4,5 +4,5 @@ export interface ICreateContact {
     bio: string;
   }
   export interface IContact extends ICreateContact {
-    id: number;
+    id: string;
   }
