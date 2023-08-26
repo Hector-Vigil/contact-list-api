@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteContact = exports.getAllContacts = exports.getContact = exports.updateContact = exports.createContact = void 0;
+exports.searchContact = exports.deleteContact = exports.getAllContacts = exports.getContact = exports.updateContact = exports.createContact = void 0;
 const prisma_1 = __importDefault(require("../db/prisma"));
 function createContact(contact) {
     return prisma_1.default.contact.create({
@@ -40,3 +40,29 @@ function deleteContact(id) {
     });
 }
 exports.deleteContact = deleteContact;
+function searchContact(value) {
+    return prisma_1.default.contact.findMany({
+        where: {
+            OR: [
+                {
+                    name: {
+                        contains: value,
+                        mode: 'insensitive',
+                    },
+                },
+                {
+                    phone: {
+                        contains: value,
+                    },
+                },
+                {
+                    bio: {
+                        contains: value,
+                        mode: 'insensitive',
+                    },
+                },
+            ],
+        },
+    });
+}
+exports.searchContact = searchContact;

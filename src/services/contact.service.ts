@@ -37,3 +37,29 @@ export function deleteContact(id:number){
     })
 }
 
+export function searchContact(value:string){
+    return prisma.contact.findMany({
+        where: {
+          OR: [
+            {
+              name: {
+                contains: value,
+                mode: 'insensitive',
+              },
+            },
+            {
+              phone: {
+                contains: value,
+              },
+            },
+            {
+              bio: {
+                contains: value,
+                mode: 'insensitive',
+              },
+            },
+          ],
+        },
+      })
+}
+
