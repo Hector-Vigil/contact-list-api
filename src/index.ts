@@ -1,13 +1,17 @@
 import dotenv from 'dotenv';
 import { Request, Response } from 'express';
 import app from "./app"
+import prisma from "./db/prisma";
 
 dotenv.config();
 
 const port = process.env.PORT || 8000;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
+app.get('/', async (req: Request, res: Response) => {
+  const contacts = await prisma.contact.findMany();
+
+  const names = contacts.map((contact: any)=>contact.name)
+  res.send(`There are ${names.length} users with the names of: ${names.join(", ")}`)
 });
 
 app.listen(port, () => {
