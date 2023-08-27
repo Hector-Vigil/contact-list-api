@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 const app_1 = __importDefault(require("./app"));
 const prisma_1 = __importDefault(require("./db/prisma"));
+const contacts_routes_1 = __importDefault(require("./routes/contacts.routes"));
 dotenv_1.default.config();
 const port = process.env.PORT || 8000;
 app_1.default.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -22,6 +23,7 @@ app_1.default.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function*
     const names = contacts.map((contact) => contact.name);
     res.send(`There are ${names.length} users with the names of: ${names.join(", ")}`);
 }));
+app_1.default.use("/contacts", contacts_routes_1.default);
 app_1.default.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });

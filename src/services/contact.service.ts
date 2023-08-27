@@ -1,5 +1,4 @@
 import { IContact, ICreateContact } from "../interfaces/contact.interface";
-import { Contact } from "@prisma/client";
 import prisma from "../db/prisma";
 
 export function createContact(contact: ICreateContact){
@@ -17,7 +16,7 @@ export function updateContact(id:string, contact: IContact){
     })
 }
 
-export function getContact(id:string){
+export function findUniqueContact(id:string){
     return prisma.contact.findUnique({
         where: {
             id
@@ -25,7 +24,7 @@ export function getContact(id:string){
     })
 }
 
-export function getAllContacts(){
+export function findAllContacts(){
     return prisma.contact.findMany();
 }
 
