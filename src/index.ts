@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import app from "./app"
 import prisma from "./db/prisma";
 import contactRoutes from "./routes/contacts.routes";
+import cors from "cors";
 import {
   errorHandlerMiddleware,
   handleError,
@@ -21,6 +22,8 @@ app.get('/', async (req: Request, res: Response) => {
 });
 
 app.use("/contacts", contactRoutes);
+
+app.use(cors());
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
