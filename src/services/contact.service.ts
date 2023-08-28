@@ -1,27 +1,32 @@
 import { IContact, ICreateContact } from "../interfaces/contact.interface";
 import prisma from "../db/prisma";
+import { assert, object, string, size, refine, regexp,pattern } from 'superstruct'
+import { CreateContactSS, ContactSS, Uuid } from "../validators/contact-validator";
 
 export function createContact(contact: ICreateContact){
-    return prisma.contact.create({
-        data: contact
-    })
+  assert(contact, CreateContactSS)
+  return prisma.contact.create({
+      data: contact
+  })
 }
 
 export function updateContact(id:string, contact: IContact){
-    return prisma.contact.update({
-        where: {
-            id
-        },
-        data: contact
-    })
+  assert(contact, ContactSS)
+  return prisma.contact.update({
+      where: {
+          id
+      },
+      data: contact
+  })
 }
 
 export function findUniqueContact(id:string){
-    return prisma.contact.findUnique({
-        where: {
-            id
-        }
-    })
+  assert(id, Uuid)
+  return prisma.contact.findUnique({
+      where: {
+          id
+      }
+  })
 }
 
 export function findAllContacts(){
@@ -29,11 +34,12 @@ export function findAllContacts(){
 }
 
 export function deleteContact(id:string){
-    return prisma.contact.delete({
-        where: {
-            id
-        }
-    })
+  assert(id, Uuid)
+  return prisma.contact.delete({
+      where: {
+          id
+      }
+  })
 }
 
 export function searchContact(value:string){
