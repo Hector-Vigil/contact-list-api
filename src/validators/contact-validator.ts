@@ -1,5 +1,5 @@
 import { PrismaClient, Prisma, Contact } from '@prisma/client'
-import { assert, object, string, size, nullable, regexp,pattern } from 'superstruct'
+import { assert, object, string, size, nullable,optional, regexp,pattern } from 'superstruct'
 
 const prisma = new PrismaClient()
 
@@ -7,7 +7,7 @@ export const CreateContactSS = object({
   name: size(string(), 2, 20),
   bio: size(string(), 5, 50),
   phone: pattern(string(),/(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4})(\s?(([E|e]xt[:|.|]?)|x|X)(\s?\d+))?/g),
-  photoUrl: nullable(string()),
+  photoUrl: nullable(optional(string())),
 })
 
 export const ContactSS = object({
@@ -15,7 +15,7 @@ export const ContactSS = object({
   name: size(string(), 2, 20),
   bio: size(string(), 5, 50),
   phone: pattern(string(),/(\+\d{1,3}\s?)?((\(\d{3}\)\s?)|(\d{3})(\s|-?))(\d{3}(\s|-?))(\d{4})(\s?(([E|e]xt[:|.|]?)|x|X)(\s?\d+))?/g),
-  photoUrl: nullable(string()),
+  photoUrl: nullable(optional(string())),
 })
 
 export const Uuid = size(string(),36)
