@@ -15,4 +15,5 @@ model Contact {
   name     String
   phone    String
   bio      String
+  photoUrl String?
 }
