@@ -3,6 +3,11 @@ import { Request, Response } from 'express';
 import app from "./app"
 import prisma from "./db/prisma";
 import contactRoutes from "./routes/contacts.routes";
+import {
+  errorHandlerMiddleware,
+  handleError,
+  isTrustedError,
+} from "./utils/error-handler";
 
 dotenv.config();
 
@@ -19,4 +24,15 @@ app.use("/contacts", contactRoutes);
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+});
+
+app.use(errorHandlerMiddleware);
+
+process.on("uncaughtException", async (error: Error) => {
+  handleError(error);
+  if (!isTrustedError(error)) process.exit(1);
+});
+
+process.on("unhandledRejection", (reason: Error) => {
+  throw reason;
 });
