@@ -9,6 +9,7 @@ import {
   handleError,
   isTrustedError,
 } from "./utils/error-handler";
+import fileUpload from 'express-fileupload';
 
 dotenv.config();
 
@@ -20,6 +21,10 @@ app.get('/', async (req: Request, res: Response) => {
   const names = contacts.map((contact: any)=>contact.name)
   res.send(`There are ${names.length} users with the names of: ${names.join(", ")}`)
 });
+
+app.use(fileUpload({
+  limits: { fileSize: 50 * 1024 * 1024 },
+}));
 
 app.use("/contacts", contactRoutes);
 

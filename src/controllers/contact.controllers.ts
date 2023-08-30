@@ -6,6 +6,7 @@ import {
   findAllContacts,
   deleteContact,
   updateContact,
+  uploadImage,
 } from "../services/contact.service";
 import asyncHandler from "express-async-handler";
 
@@ -69,5 +70,24 @@ export const deleteRemoveContact = asyncHandler(
     const payload: IContact = req.body;
     const contacts = await deleteContact(id);
     res.status(200).json(contacts);
+  }
+)
+
+export const postUploadImage = asyncHandler(
+  async(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const { files } = req;
+    if(!files)
+      res.status(500).send({message:"file not valid"});
+    else{
+
+      const data = (files?.image as any).data;
+      const name = (files?.image as any).name;
+      const url = await uploadImage(data,name);
+      res.status(200).json(url);
+    }
   }
 )

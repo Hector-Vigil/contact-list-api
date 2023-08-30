@@ -8,5 +8,6 @@ router.patch("/:id", contactController.patchUpdateContact);
 router.get("/", contactController.getContacts);
 router.get("/:id", contactController.getContact);
 router.delete("/:id", contactController.deleteRemoveContact);
+router.post("/uploadImage", contactController.postUploadImage);
 
 export default router;
