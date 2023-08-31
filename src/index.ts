@@ -15,6 +15,8 @@ dotenv.config();
 
 const port = process.env.PORT || 8000;
 
+app.use(cors());
+
 app.get('/', async (req: Request, res: Response) => {
   const contacts = await prisma.contact.findMany();
 
@@ -28,7 +30,6 @@ app.use(fileUpload({
 
 app.use("/contacts", contactRoutes);
 
-app.use(cors());
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);

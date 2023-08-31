@@ -7,6 +7,7 @@ import {
   deleteContact,
   updateContact,
   uploadImage,
+  searchContacts
 } from "../services/contact.service";
 import asyncHandler from "express-async-handler";
 
@@ -54,7 +55,8 @@ export const getContacts = asyncHandler(
     res: Response,
     next: NextFunction
   ) => {
-    const contacts = await findAllContacts();
+    const { query } = req.query;
+    const contacts = await searchContacts(query as string|string[]);
     res.status(200).json(contacts);
   }
 )

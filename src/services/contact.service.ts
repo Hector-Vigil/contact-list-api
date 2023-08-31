@@ -65,29 +65,34 @@ export async function uploadImage(image:Buffer,filename:string){
   }  
 }
 
-export function searchContact(value:string){
+export function searchContacts(query?:string | string[]){
+  if(!!query){
     return prisma.contact.findMany({
-        where: {
-          OR: [
-            {
-              name: {
-                contains: value,
-                mode: 'insensitive',
-              },
+      where: {
+        OR: [
+          {
+            name: {
+              contains: query,
+              mode: 'insensitive',
             },
-            {
-              phone: {
-                contains: value,
-              },
+          },
+          {
+            phone: {
+              contains: query,
             },
-            {
-              bio: {
-                contains: value,
-                mode: 'insensitive',
-              },
+          },
+          {
+            bio: {
+              contains: query,
+              mode: 'insensitive',
             },
-          ],
-        },
-      })
+          },
+        ],
+      },
+    })
+  } else {
+    return prisma.contact.findMany();
+  }
+
 }
 
