@@ -56,7 +56,8 @@ export const getContacts = asyncHandler(
     next: NextFunction
   ) => {
     const { query } = req.query;
-    const contacts = await searchContacts(query as string|string[]);
+    const { limit } = req.query;
+    const contacts = await searchContacts(limit as string|string[],query as string|string[]);
     res.status(200).json(contacts);
   }
 )

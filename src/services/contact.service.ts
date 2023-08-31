@@ -50,7 +50,7 @@ export async function uploadImage(image:Buffer,filename:string){
     region: 'us-east-005',
   });
   const bucketName = "contacts-list-app-images";
-  const keyName = new Date().toISOString()+filename;
+  const keyName = new Date().toISOString()+filename.replace(",","");
   const bucketUrl = "https://f005.backblazeb2.com/file/contacts-list-app-images/";
   try{
     await s3.send(new PutObjectCommand({
@@ -65,9 +65,10 @@ export async function uploadImage(image:Buffer,filename:string){
   }  
 }
 
-export function searchContacts(query?:string | string[]){
+export function searchContacts(limit:string|string[],query?:string | string[]){
+  let queryRequest : any = {}
   if(!!query){
-    return prisma.contact.findMany({
+    queryRequest = {
       where: {
         OR: [
           {
@@ -89,10 +90,23 @@ export function searchContacts(query?:string | string[]){
           },
         ],
       },
-    })
+      orderBy: {
+        name: 'asc',
+      },
+    }
   } else {
-    return prisma.contact.findMany();
+    queryRequest = {
+      orderBy: {
+        name: 'asc',
+      },
+    }
   }
+
+  if(!!limit)
+    queryRequest = {...queryRequest, take: parseInt(limit as string)}
+
+  return prisma.contact.findMany(queryRequest);
+  
 
 }
 
