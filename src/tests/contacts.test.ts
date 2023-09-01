@@ -15,14 +15,14 @@ describe("setup for s3.upload testing", () => {
   let testS3: any;
   beforeEach(() => {
     testS3 = new AWS.S3();
-    testS3.promise.mockReturnValueOnce({ Bucket: 'contacts-list-app-images' });
+    testS3.promise.mockReturnValueOnce({ Bucket: process.env.BUCKET_NAME });
   })
 
   test('returns expected upload value', async () => {
     let params = {};
     let result = await testS3.upload(params).promise();
-    expect(result).toEqual({ Bucket: 'contacts-list-app-images' });
-    expect(result.Bucket).toBe("contacts-list-app-images")
+    expect(result).toEqual({ Bucket: process.env.BUCKET_NAME });
+    expect(result.Bucket).toBe(process.env.BUCKET_NAME)
   });
 });
 

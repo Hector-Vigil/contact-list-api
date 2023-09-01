@@ -46,12 +46,12 @@ export function deleteContact(id:string){
 
 export async function uploadImage(image:Buffer,filename:string){
   const s3 = new S3Client({
-    endpoint: 'https://s3.us-east-005.backblazeb2.com',
-    region: 'us-east-005',
+    endpoint: process.env.BUCKET_URL,
+    region: process.env.BUCKET_REGION,
   });
-  const bucketName = "contacts-list-app-images";
+  const bucketName = process.env.BUCKET_NAME;
   const keyName = new Date().toISOString()+filename.replace(",","");
-  const bucketUrl = "https://f005.backblazeb2.com/file/contacts-list-app-images/";
+  const bucketUrl = `${process.env.BUCKET_URL}/file/${process.env.BUCKET_NAME}/`;
   try{
     await s3.send(new PutObjectCommand({
       Bucket: bucketName,
