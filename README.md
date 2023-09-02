@@ -5,9 +5,10 @@
 ## Table of Contents
 
 - [Description](#description)
-- [Getting Started](#getting-started)
+- [Getting Started](#getting%20started)
 - [Scripts](#scripts)
 - [Prerequisites](#prerequisites)
+- [Automatic Build](#automatic%20build)
 
 
 The **Contacts List** application is a simple Node.js application that allows you to manage and manipulate a contact list. It provides functionalities to add, update, delete, and display contacts.
@@ -42,9 +43,9 @@ Make sure you have the following prerequisites installed to run the application:
 - Prisma: Run `npm install -g prisma` to install Prisma globally.
 
 ## Automatic Build
-> - Ensure you have installed docker on your machine([link](https://docs.docker.com/engine/install/))
-> - Ensure you do not have any service running on ports 3000 and 8000.
-> - Clone the Angular app [repository](https://github.com/Hector-Vigil/contact-list-app) and store it in the same project's folder.
-> - Run automatic build “docker-compose up --build -d”
-> - Run “npm run migrate:up” to add initial data.
-> - Check services are running correctly in http://localhost:3000,
+- Ensure you have installed docker on your machine([link](https://docs.docker.com/engine/install/))
+- Ensure you do not have any service running on ports 3000 and 8000.
+- Clone the Angular app [repository](https://github.com/Hector-Vigil/contact-list-app) and store it in the same project's folder.
+- Run automatic build “docker-compose up --build -d”
+- Run “npm run migrate:up” to add initial data.
+- Check services are running correctly in http://localhost:3000,
