@@ -51,7 +51,7 @@ export async function uploadImage(image:Buffer,filename:string){
   });
   const bucketName = process.env.BUCKET_NAME;
   const keyName = new Date().toISOString()+filename.replace(",","");
-  const bucketUrl = `${process.env.BUCKET_URL}/file/${process.env.BUCKET_NAME}/`;
+  const bucketUrl = `${process.env.BUCKET_SHARE_URL}/file/${process.env.BUCKET_NAME}/`;
   try{
     await s3.send(new PutObjectCommand({
       Bucket: bucketName,
