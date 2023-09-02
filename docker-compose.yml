@@ -1,0 +1,48 @@
+version: "3"
+services:
+  contact-list-app:
+    build:
+      context: ../contact-list-app/contact-list-app/
+      dockerfile: Dockerfile
+    image: contact-list-app
+    container_name: contact-list-app
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - contact-list-api
+  contact-list-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: contact-list-api
+    container_name: contact-list-api
+    restart: always
+    env_file:
+      - .env.docker
+    ports:
+      - "${PORT}:${PORT}"
+    external_links:
+      - postgres
+    links:
+      - postgres
+    depends_on:
+      - "postgres"
+    volumes: 
+      - ./credentials:/root/.aws/credentials
+    command: ["./wait-for-it.sh", "postgres:5432", "--", "npm", "run","migrate:postgres:run:docker"]
+       
+  postgres:
+      image: postgres:alpine
+      restart: always
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=prisma
+      ports:
+        - '5432:5432'
+      volumes: 
+        - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local
